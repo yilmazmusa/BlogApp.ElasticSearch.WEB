@@ -15,6 +15,7 @@ namespace BlogApp.ElasticSearch.WEB.Services
             _blogRepository = blogRepository;
         }
 
+
         public async Task<bool> SaveAsync(BlogCreateViewModel model)
         {
             Blog newBlog = new Blog();
