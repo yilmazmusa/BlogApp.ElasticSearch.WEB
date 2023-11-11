@@ -1,3 +1,5 @@
+using BlogApp.ElasticSearch.WEB.Extensions;
+
 namespace BlogApp.ElasticSearch.WEB
 {
     public class Program
@@ -8,6 +10,8 @@ namespace BlogApp.ElasticSearch.WEB
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddElastic(builder.Configuration);
 
             var app = builder.Build();
 
