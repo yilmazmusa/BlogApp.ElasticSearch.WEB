@@ -6,6 +6,6 @@ namespace BlogApp.ElasticSearch.WEB.Interfaces
     public interface IBlogService
     {
         public  Task<bool> SaveAsync(BlogCreateViewModel model);
-        public Task<List<Blog>> SearchAsync(string request);
+        public Task<List<BlogSearchViewModel>> SearchAsync(string request);
     }
 }
