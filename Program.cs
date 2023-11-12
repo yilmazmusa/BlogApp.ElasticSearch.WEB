@@ -1,4 +1,7 @@
 using BlogApp.ElasticSearch.WEB.Extensions;
+using BlogApp.ElasticSearch.WEB.Interfaces;
+using BlogApp.ElasticSearch.WEB.Repository;
+using BlogApp.ElasticSearch.WEB.Services;
 
 namespace BlogApp.ElasticSearch.WEB
 {
@@ -12,7 +15,8 @@ namespace BlogApp.ElasticSearch.WEB
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddElastic(builder.Configuration);
-
+            builder.Services.AddScoped<IBlogService,BlogService>();
+            builder.Services.AddScoped<IBlogRepository,BlogRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
