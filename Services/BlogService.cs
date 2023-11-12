@@ -8,9 +8,9 @@ namespace BlogApp.ElasticSearch.WEB.Services
     public class BlogService : IBlogService
     {
         //Depedency Inversion +  Inversion Of Control(IoC) = Dependency Injection (DP)
-        private readonly BlogRepository _blogRepository;
+        private readonly IBlogRepository _blogRepository;
 
-        public BlogService(BlogRepository blogRepository)
+        public BlogService(IBlogRepository blogRepository)
         {
             _blogRepository = blogRepository;
         }
@@ -22,7 +22,7 @@ namespace BlogApp.ElasticSearch.WEB.Services
 
             newBlog.Title = model.Title;
             newBlog.Content = model.Content;
-            newBlog.Tags = model.Tags.ToArray();
+            newBlog.Tags = model.Tags.Split(","); // Gelen datayı , göre parçaladık
             newBlog.UserId = Guid.NewGuid();
 
             var isCreatedBlog = await _blogRepository.SaveAsync(newBlog);
