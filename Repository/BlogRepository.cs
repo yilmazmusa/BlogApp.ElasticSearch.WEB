@@ -1,9 +1,10 @@
-﻿using BlogApp.ElasticSearch.WEB.Models;
+﻿using BlogApp.ElasticSearch.WEB.Interfaces;
+using BlogApp.ElasticSearch.WEB.Models;
 using Elastic.Clients.Elasticsearch;
 
 namespace BlogApp.ElasticSearch.WEB.Repository
 {
-    public class BlogRepository
+    public class BlogRepository : IBlogRepository
     {
         private readonly ElasticsearchClient _elasticsearchClient;
         private const string? indexName = "blog";
@@ -31,5 +32,6 @@ namespace BlogApp.ElasticSearch.WEB.Repository
 
         }
 
+        
     }
 }
