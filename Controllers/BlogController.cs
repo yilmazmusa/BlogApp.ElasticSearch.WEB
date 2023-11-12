@@ -40,12 +40,18 @@ namespace BlogApp.ElasticSearch.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-            return View(new List<Blog>());
+            return View(new List<Blog>(await _blogService.SearchAsync(string.Empty))); 
+            // Sayfa ilk açıldığında tüm dataları göstermek için bunu yaptık.
+            // Empty yani boş data  ile service ordan da repositorye gittiğimizde repository tarafı boş ya da null
+            // ise tüm datayı gösteriyor şeklinde dinamik şekilde yapmıştık çünkü.
+            // Yani kısaca sayfa ilk açıldığında kullanıcıya tüm datayı dönmek için yaptık
         }
 
         [HttpPost]
         public async Task<IActionResult> Search( string searchText)
         {
+
+            ViewBag.searchText = searchText; // UI tarafında arayacağımız şeyi yazıp aradıktan sonra sonuç geldiğinde aradığımız kelime input alannından kayboluyordu kaybolmaması için ViewBag'e aldık.
              var blogList = await _blogService.SearchAsync(searchText);
 
             return View(blogList);
