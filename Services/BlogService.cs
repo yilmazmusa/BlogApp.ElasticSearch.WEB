@@ -22,7 +22,7 @@ namespace BlogApp.ElasticSearch.WEB.Services
 
             newBlog.Title = model.Title;
             newBlog.Content = model.Content;
-            newBlog.Tags = model.Tags.Split(","); // Gelen datayı , göre parçaladık
+            newBlog.Tags = model.Tags.Split(","); // Gelen datayı , göre parçaladık ve array tipinde olan newBlog.Tags a atadık.
             newBlog.UserId = Guid.NewGuid();
 
             var isCreatedBlog = await _blogRepository.SaveAsync(newBlog);
@@ -33,6 +33,19 @@ namespace BlogApp.ElasticSearch.WEB.Services
                                           //eğer tersi olursa false döner Controllera
         }
 
-       
+
+        public async Task<List<Blog>> SearchAsync(string searchRequest)
+        {
+            var response = await _blogRepository.SearchAsync(searchRequest);
+
+            if (response == null )
+            {
+                return null;
+            }
+            return response;
+        }
+
+
+
     }
 }
