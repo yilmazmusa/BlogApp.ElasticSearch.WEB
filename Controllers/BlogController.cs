@@ -40,7 +40,7 @@ namespace BlogApp.ElasticSearch.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Search()
         {
-            return View(new List<Blog>(await _blogService.SearchAsync(string.Empty))); 
+            return View(new List<BlogSearchViewModel>(await _blogService.SearchAsync(string.Empty))); 
             // Sayfa ilk açıldığında tüm dataları göstermek için bunu yaptık.
             // Empty yani boş data  ile service ordan da repositorye gittiğimizde repository tarafı boş ya da null
             // ise tüm datayı gösteriyor şeklinde dinamik şekilde yapmıştık çünkü.
