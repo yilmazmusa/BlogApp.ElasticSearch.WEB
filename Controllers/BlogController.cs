@@ -1,4 +1,5 @@
 ﻿using BlogApp.ElasticSearch.WEB.Interfaces;
+using BlogApp.ElasticSearch.WEB.Models;
 using BlogApp.ElasticSearch.WEB.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,13 +28,27 @@ namespace BlogApp.ElasticSearch.WEB.Controllers
             var response = await _blogService.SaveAsync(model);
 
             if (!response)
-            {
+            {     
                 TempData["result"] = "Kayıt Başarısız!!!";
                 return RedirectToAction(nameof(BlogController.Save)); // Tip güvenli bir şekilde yukardaki(17.satırdaki) Save metoduna yönlendirdil.
             }
 
             TempData["result"] = "Kayıt Başarılı.";
             return RedirectToAction(nameof(BlogController.Save));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            return View(new List<Blog>());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search( string searchText)
+        {
+             var blogList = await _blogService.SearchAsync(searchText);
+
+            return View(blogList);
         }
 
 

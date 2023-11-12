@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="container">
+
+    <div class="col-md-10 offset-md-1"> @* 10 birimlik bir div oluşturduk soldan1 brim boşlıuk bıraktık totali 12 birim
+                                         //old için kalan 1 i de sağğdan kendi boşluk bıraktı *@
+
+        <form asp-action="Search" >
+            <div class="mb-3">  @* 3 brim aşağı indik. *@
+
+                <label>Search(Title/Content)</label>
+
+                <input name="searchText"  class="form-control"/> @*Backend tarafında bu inputtan gelen datayı yakalamak için name alanından yararlanırız. *@
+
+            </div>
+
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+
+    </div>
+</div>
