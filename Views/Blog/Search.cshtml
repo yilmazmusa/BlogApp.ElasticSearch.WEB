@@ -1,7 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Search";
 }
-@model List<Blog>
+@model List<BlogSearchViewModel> 
+@*Bunu görebilmesi için Shared'ın içinde ki _ViewImports a bunu namespacesini using olarak ekedik.*@
 <div class="container">
 
     <div class="col-md-10 offset-md-1">
@@ -52,8 +53,8 @@
                             <td>@blog.Title</td>
                             <td>@blog.Content</td>
                             <td>@blog.UserId</td>
-                            <td>@String.Join(",",blog.Tags)</td>
-                            <td>@blog.Created.ToShortDateString()</td>
+                            <td>@blog.Tags</td>
+                            <td>@blog.Created</td>
 
                         </tr>
                     }
