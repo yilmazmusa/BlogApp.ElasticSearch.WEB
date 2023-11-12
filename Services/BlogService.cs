@@ -34,18 +34,26 @@ namespace BlogApp.ElasticSearch.WEB.Services
         }
 
 
-        public async Task<List<Blog>> SearchAsync(string searchRequest)
+        public async Task<List<BlogSearchViewModel>> SearchAsync(string searchRequest)
         {
-            var response = await _blogRepository.SearchAsync(searchRequest);
+            var blogList = await _blogRepository.SearchAsync(searchRequest);
 
-            if (response == null )
+            if (blogList == null )
             {
                 return null;
             }
-            return response;
+
+            return blogList.Select(b => new BlogSearchViewModel()
+            {
+                Id = b.Id,
+                Title = b.Title,
+                Content = b.Content,
+                Created = b.Created.ToShortDateString(),
+                Tags = String.Join(",", b.Tags),
+                UserId = b.UserId.ToString()
+
+            }).ToList(); ;
         }
-
-
 
     }
 }

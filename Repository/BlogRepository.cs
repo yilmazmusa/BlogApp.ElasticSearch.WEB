@@ -51,13 +51,21 @@ namespace BlogApp.ElasticSearch.WEB.Repository
             Action<QueryDescriptor<Blog>> matchAll = q => q.MatchAll(); //Boş geldiğinde tüm datayı çekicek sorgu
 
             Action<QueryDescriptor<Blog>> matchContent = q => q //Gelen istek datasına göre Content alanında/fieldında Match sorgusu yapacak olan sorgu
-                                                        .Match(m => m
-                                                        .Field(f => f.Content).Query(searchRequest));
+                                                         .Match(m => m
+                                                         .Field(f => f.Content).Query(searchRequest));
 
             Action<QueryDescriptor<Blog>> matchBoolPrefixTitle = q => q //Gelen istek datasına göre Title alanında/fieldında MatchBoolPrefix sorgusu yapacak olan sorgu
-                                                        .MatchBoolPrefix(mb => mb
-                                                        .Field(f => f.Title).Query(searchRequest));
+                                                                .MatchBoolPrefix(mb => mb
+                                                                .Field(f => f.Title).Query(searchRequest));
 
+            Action<QueryDescriptor<Blog>> termTagLevelQuery = q => q
+                                                              .Term(t => t
+                                                              .Field(f => f.Tags).Value(searchRequest));
+
+
+            //NOT: TermLevel Querylerde(yani tipi keyword olan datalarda arama yaparken) Field(f => f.Tags).Value(searchRequest) derken
+            //FullText Querylerde(yani tipi text olan datalarda arama yaparken) .Field(f => f.Title).Query(searchRequest)); deriz
+            //Yani Term Querylerde Field ten sonra Value derken, Fulltext Querylerde Field ten sonra Query deriz.
 
             if (string.IsNullOrEmpty(searchRequest))
             {
@@ -67,6 +75,7 @@ namespace BlogApp.ElasticSearch.WEB.Repository
             {
                 ListQuery.Add(matchContent);
                 ListQuery.Add(matchBoolPrefixTitle);
+                ListQuery.Add(termTagLevelQuery);
 
             }
 
