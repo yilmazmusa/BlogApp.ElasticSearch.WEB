@@ -1,24 +1,66 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Search";
 }
-
+@model List<Blog>
 <div class="container">
 
-    <div class="col-md-10 offset-md-1"> @* 10 birimlik bir div oluşturduk soldan1 brim boşlıuk bıraktık totali 12 birim
-                                         //old için kalan 1 i de sağğdan kendi boşluk bıraktı *@
+    <div class="col-md-10 offset-md-1">
+        @* 10 birimlik bir div oluşturduk soldan1 brim boşlıuk bıraktık totali 12 birim
+        //old için kalan 1 i de sağğdan kendi boşluk bıraktı *@
 
-        <form asp-action="Search" >
-            <div class="mb-3">  @* 3 brim aşağı indik. *@
+        <form asp-action="Search">
+            <div class="mb-3">
+                @* 3 brim aşağı indik. *@
 
                 <label>Search(Title/Content)</label>
-
-                <input name="searchText"  class="form-control"/> @*Backend tarafında bu inputtan gelen datayı yakalamak için name alanından yararlanırız. *@
+                <input value="@ViewBag.searchText" name="searchText" class="form-control"/> @*Backend tarafında bu inputtan gelen datayı yakalamak için name alanından yararlanırız. *@
 
             </div>
 
             <button class="btn btn-primary" type="submit">Search</button>
         </form>
+
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info">
+                Sonuç Bulunamadı.
+            </div>
+        }
+
+        else
+        {
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>UserId</th>
+                        <th>Tags</th>
+                        <th>Created</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var blog in Model)
+                    {
+                        <tr>
+                            <td>@blog.Id</td>
+                            <td>@blog.Title</td>
+                            <td>@blog.Content</td>
+                            <td>@blog.UserId</td>
+                            <td>@String.Join(",",blog.Tags)</td>
+                            <td>@blog.Created.ToShortDateString()</td>
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        }
 
     </div>
 </div>
